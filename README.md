@@ -297,11 +297,58 @@ localhost:8004/canciones/delete/1/9
 ```
 Se eliminó la canción correctamente
 
-#### En caso de que no se encuentre la cancion el response envia lo siguiente:
+En caso de que no se encuentre la cancion el response envia lo siguiente:
 
 No se encontró la canción
 
 ```
 
 
+### Recomendaciones al actualizar una canción
+```http
+   localhost:8004/canciones/update/1
+```
+Para actualizar una cancion se debe seguir estricatemente la siguiente sintaxis:
+
+```javascript 
+ {
+        "id": 6,
+        "titulo": "Billie Jean",
+        "genero": "Pop",
+        "duracion": "00:04:45",
+        "estreno": "2023-10-09T15:11:05.000+00:00",
+        "artistas": [
+            {
+                "id": 1
+            }
+        ]
+    }
+```
+
+- si la cancion tiene un error de sintaxis o no contiene un parametro del constrructor, la aplicacion lanzara una excepcion como por ejemplo:
+```java
+java.sql.SQLIntegrityConstraintViolationException:
+```
+
+- el id debe ser el id de la cancion, que será actualizada.
+- se puede agregar nuevos artistas al arreglo de artistas sin ningún problema.
+- en caso de que la cancion no exista, simplemente no retorna nada.
+
+Si la peticion es procesada correctamente por el servidor el respuesta seria la siguiente:
+
+```javascript
+    {
+        "id": 6,
+        "titulo": "Billie Jean",
+        "genero": "Pop",
+        "duracion": "00:04:45",
+        "estreno": "2023-10-09T15:11:05.000+00:00",
+        "artistas": [
+            {
+                "id": 1,
+                "nombre": "Michael Jackson"
+            }
+        ]
+    }
+```
 
