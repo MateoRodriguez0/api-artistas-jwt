@@ -355,7 +355,7 @@ Si la peticion es procesada correctamente por el servidor el respuesta seria la 
 
 # Publicar una cancion
 
-En la siguiente url , el valor 3 es el id del usuario que realiza la peticion, se utiliza de esta manera debido a que esta api es una servicio independiente. La aplicacion principal será la encargada de implementar la seguridad con JWt por lo cual no seria optimo recuperar el usuario del token en cada recurso de esta api. Sino que el usuario venga desde el cliente feign.
+En la siguiente url , el valor 3 es el id del usuario que realiza la peticion, se utiliza de esta manera debido a que esta api es una servicio independiente. La aplicacion principal será la encargada de implementar la seguridad con JWT por lo cual no seria optimo recuperar el usuario del token en cada recurso de esta api. Sino que el idArtista venga desde el cliente feign.
 ```http
 POST localhost:8004/canciones/save/3
 ```
@@ -369,7 +369,7 @@ POST localhost:8004/canciones/save/3
       
     }
 ```
-Si la cancion solo tiene un artista y es el que la esta publicando, no es necesrio especificar la lista de usuarios, ya que automaticamente con el id que se envia en la url se le asigna el artista a la cancion.
+Si la cancion solo tiene un artista y es el que la esta publicando, no es necesrio especificar la lista de artistas, ya que automaticamente con el id que se envia en la URL se le asigna el artista a la cancion.
 De lo contrario se crea la lista de artistas sin incluir al artista que esta haciendo la publicacion.
 
 Y seria de la siguiente manera
