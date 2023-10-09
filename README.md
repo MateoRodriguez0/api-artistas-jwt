@@ -287,3 +287,23 @@ localhost:8004/canciones/artista/1
     }
 ]
 ```
+
+
+```http
+localhost:8004/canciones/delete/1/9
+
+```
+#### Response
+```
+Se eliminó la canción correctamente
+
+```
+
+En caso de que no se encuentre la cancion el response envia lo siguiente:
+```
+No se encontró la canción
+
+```
+
+
+
