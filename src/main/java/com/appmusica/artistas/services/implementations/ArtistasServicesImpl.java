@@ -1,5 +1,6 @@
 package com.appmusica.artistas.services.implementations;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,27 +27,44 @@ public class ArtistasServicesImpl implements ArtistasServices {
 	
 
 	@Override
-	public Boolean publicarCancion(Cancion cancion) {
-		cancion.setEstreno(new Timestamp(System.currentTimeMillis()));;
+	public Boolean publicarCancion(Cancion cancion,Long id) {
 		
-		Cancion cancionGuardada= cancionRepository.save(cancion);
-		
-		return cancionRepository.existsById(cancionGuardada.getId());
+	    Optional<Artista> artistaOptional = artistaRepository.findById(id);
+	    
+	    if (artistaOptional.isPresent()) {
+	    	
+	        Artista artista = artistaOptional.get();
+	      
+	        artista.getCanciones().add(cancion);
+	        cancion.addartist(artista);
+	        cancion.setEstreno(new Timestamp(System.currentTimeMillis()));
+	        cancionRepository.save(cancion);
+	        
+	        return true;
+	    }
+	    
+	    return false;
 	}
 
 	@Override
-	public Boolean EliminarCancion(Long idAritsta, Long idCancion) {
+	public Boolean EliminarCancion(Long idArtista, Long idCancion) {
 		
-		Artista artista = artistaRepository.findById(idAritsta).orElse(null);
+		Artista artista = artistaRepository.findById(idArtista).orElse(null);
 		
-		Optional<Cancion> cancionDelet=artista.getCanciones()
-				.stream()
-				.filter(c -> c.getId().equals(idCancion))
-				.findFirst();
+		if(artista!=null && cancionRepository.existsById(idCancion) ) {
+			
+			Optional<Cancion> cancionDelet=artista.getCanciones()
+					.stream()
+					.filter(c -> c.getId().equals(idCancion))
+					.findFirst();
 		
-		cancionDelet.ifPresent(cancionRepository::delete);
+			cancionDelet.ifPresent(cancionRepository::delete);
 		
-		return !cancionRepository.existsById(idCancion);
+			return !cancionRepository.existsById(idCancion);
+		
+		}
+		
+		return false;
 	}
 
 	@Override
@@ -60,13 +78,17 @@ public class ArtistasServicesImpl implements ArtistasServices {
 				.filter(c -> c.getId().equals(cancion.getId()))
 				.findFirst();
 		
-		if(cancionUpdate.isPresent()) {
+		if(cancionUpdate.isPresent() ) {
 			return cancionRepository.save(cancion);
 		}
 		
 		return null;
 	}
-
+	
+	@Override
+	public List<Artista> getArtistas() {
+		return artistaRepository.findAll();
+	}
 	
 	
 	@Autowired
@@ -74,6 +96,8 @@ public class ArtistasServicesImpl implements ArtistasServices {
 	
 	@Autowired
 	private ArtistaRepository artistaRepository;
+
+	
 
 
 }

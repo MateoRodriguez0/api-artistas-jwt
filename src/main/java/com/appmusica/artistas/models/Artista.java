@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +26,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Artista {
 
+	public Artista(Long id) {
+		this.id=id;
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -34,7 +39,7 @@ public class Artista {
 	
 	
 	@JsonIgnore
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "canciones_artistas",
 		joinColumns = @JoinColumn(name="idArtista"),
 		inverseJoinColumns = {@JoinColumn(name="idCancion")})

@@ -34,7 +34,7 @@ public class CancionServicesImpl implements CancionServices{
 	@Override
 	public Cancion getCancion(Long idCancion) {
 		return cancionRepository.findById(idCancion)
-				.orElseThrow(() -> new RuntimeException("cancion not found"));
+				.orElse(null);
 	}
 
 	

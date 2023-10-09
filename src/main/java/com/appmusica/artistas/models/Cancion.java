@@ -2,10 +2,12 @@ package com.appmusica.artistas.models;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.appmusica.artistas.models.Cancion;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +20,6 @@ import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 /**
  * entidad que mapea a una tabla llamada canciones en la base de datos.
  * 
@@ -32,12 +33,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Cancion {
 
-	public Cancion(String titulo,Time duracion,List<Artista> artistas) {
+	public Cancion(String titulo,String genero, Time duracion, List<Artista> artistas) {
 		
 		this.titulo=titulo;
+		this.genero=genero;
 		this.duracion=duracion;
 		this.artistas=artistas;
+
 		
+	}
+
+	public Cancion(String titulo,String genero, Time duracion) {
+		
+		this.titulo=titulo;
+		this.genero=genero;
+		this.duracion=duracion;
+	
 	}
 	
 	@Id
@@ -58,7 +69,18 @@ public class Cancion {
 	@Column(name = "fechaPublicacion")
 	private Timestamp estreno;
 
-	@ManyToMany(mappedBy = "canciones")
+	@ManyToMany(mappedBy = "canciones",cascade = CascadeType.PERSIST)
 	private List<Artista> artistas;
+	
+	
+
+	public void addartist(Artista artista) {
+		if(artistas==null) {
+			artistas= new ArrayList<>();
+		}
+		
+		artistas.add(artista);
+	}
+	
 }
 

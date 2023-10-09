@@ -1,5 +1,8 @@
 package com.appmusica.artistas.services;
 
+import java.util.List;
+
+import com.appmusica.artistas.models.Artista;
 import com.appmusica.artistas.models.Cancion;
 
 /**
@@ -16,7 +19,7 @@ public interface ArtistasServices {
 	 * @param cancion es la cancion que sera guardada en la base de datos
 	 * @return true si la cancion se guardo correctamente
 	 */
-	Boolean publicarCancion(Cancion cancion);
+	Boolean publicarCancion(Cancion cancion,Long id);
 	
 	/**
 	 * elimina una cancion de la base de tatos siempre verificando que el artista con idArtista 
@@ -37,6 +40,11 @@ public interface ArtistasServices {
 	Cancion editarCancion(Long idAritsta,Cancion cancion);
 	
 	
+	/**
+	 * 
+	 * @return
+	 */
+	List<Artista> getArtistas();
 	
 	
 	
