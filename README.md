@@ -364,9 +364,7 @@ POST localhost:8004/canciones/save/3
     {
         "titulo": "Lala",
         "genero": "urbano latino",
-        "duracion": "00:03:18",
-        "estreno": "2023-10-09T15:11:05.000+00:00"
-      
+        "duracion": "00:03:18",      
     }
 ```
 Si la cancion solo tiene un artista y es el que la esta publicando, no es necesrio especificar la lista de artistas, ya que automaticamente con el id que se envia en la URL se le asigna el artista a la cancion.
@@ -379,7 +377,6 @@ Y seria de la siguiente manera
         "titulo": "Lala",
         "genero": "urbano latino",
         "duracion": "00:03:18",
-        "estreno": "2023-10-09T15:11:05.000+00:00",
         "artistas":[
             {
                 "id":1
