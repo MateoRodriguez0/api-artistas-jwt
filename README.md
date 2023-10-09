@@ -297,10 +297,8 @@ localhost:8004/canciones/delete/1/9
 ```
 Se eliminó la canción correctamente
 
-```
+#### En caso de que no se encuentre la cancion el response envia lo siguiente:
 
-En caso de que no se encuentre la cancion el response envia lo siguiente:
-```
 No se encontró la canción
 
 ```
