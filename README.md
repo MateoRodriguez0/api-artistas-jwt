@@ -1,4 +1,4 @@
-# MusicApp(API Artistas) 
+# Api Restful of artist & Spring Data JPA for MusicApp 
 Esta es una api que gestiona algunas peticiones para los artistass de una app de musica.
 Contribuye a la creacion de un proyecto spring boot con el proposito de implementar spring security jWT.
 
