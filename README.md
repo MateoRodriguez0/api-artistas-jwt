@@ -48,9 +48,9 @@ spring.datasource.hikari.connection-timeout=45000
 ## Requeriments
 - Java 17 o una version superior.
 - MySQL 8
+- Lombock 
 
 ## Instalation
-
 - Primero Descargamos la version mas actual del proyecto en el siguiente [enlace](https://github.com/MateoRodriguez0/appmusic-oyentes/releases/tag/version-1.0)
 - luego, importamos la base de datos en nuestro gestor SGBD MySQL.
 - importamos este proyecto en el IDE. 
