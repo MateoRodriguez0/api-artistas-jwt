@@ -58,31 +58,48 @@ public class ArtistasServicesImpl implements ArtistasServices {
 					.filter(c -> c.getId().equals(idCancion))
 					.findFirst();
 		
-			cancionDelet.ifPresent(cancionRepository::delete);
+			if(cancionDelet.isPresent()) {
+			
+				 for (Artista art : cancionDelet.get().getArtistas()) {
+					 
+					 art.getCanciones().remove(cancionDelet.get());
+		            }
+				
+				artistaRepository.saveAll(cancionDelet.get().getArtistas());
+				cancionRepository.deleteById(idCancion);
+			}
 		
-			return !cancionRepository.existsById(idCancion);
+			
 		
 		}
+		return !cancionRepository.existsById(idCancion);
 		
-		return false;
 	}
 
 	@Override
 	public Cancion editarCancion(Long idAritsta,Cancion cancion) {
 		
-		Optional<Cancion> cancionUpdate= artistaRepository
-				.findById(idAritsta)
-				.orElse(null)
-				.getCanciones()
-				.stream()
-				.filter(c -> c.getId().equals(cancion.getId()))
-				.findFirst();
+		Optional<Artista> artistaUpdate= artistaRepository
+				.findById(idAritsta);
 		
-		if(cancionUpdate.isPresent() ) {
+		Optional<Cancion> cancionUpdate=Optional.empty();
+		
+		if(artistaUpdate.isPresent()) {
+			
+			cancionUpdate=artistaUpdate.get().getCanciones()
+					.stream()
+					.filter(c -> c.getId().equals(cancion.getId()))
+					.findFirst();
+		}
+				
+		
+		if(cancionUpdate.isPresent()) {
 			return cancionRepository.save(cancion);
 		}
+		else {
+			return null;
+		}
 		
-		return null;
 	}
 	
 	@Override

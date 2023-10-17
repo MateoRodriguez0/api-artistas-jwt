@@ -3,6 +3,7 @@ package com.appmusica.artistas.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,29 +44,35 @@ public class ArtistasController {
 	@DeleteMapping(value = "/delete/{idArtista}/{idCancion}")
 	public ResponseEntity<String> deleteCancion(@PathVariable(name = "idArtista") Long idAritsta,@PathVariable(name = "idCancion") Long idCancion){
 		
+		if(cancionServices.getCancion(idCancion)==null) {
+			 return ResponseEntity.ok("La canción no existe");
+		}
+		
 		if(artistasServices.EliminarCancion(idAritsta, idCancion)) {
 			 return ResponseEntity.ok("Se eliminó la canción correctamente");
 		}
 		
-		 return ResponseEntity.unprocessableEntity().body("No se encontró la canción");
+		 return ResponseEntity.ok("No se pudo eliminar la canción");
 	}
 	
 
 	@PutMapping(value = "/update/{idArtista}")
-	public ResponseEntity<Object> updateCancion(@PathVariable(name = "idArtista") Long idAritsta,@RequestBody Cancion cancion){
+	public ResponseEntity<?> updateCancion(@PathVariable(name = "idArtista") Long idAritsta,@RequestBody Cancion cancion){
 		
-		if(artistasServices.editarCancion(idAritsta, cancion)==null) {
-			ResponseEntity.unprocessableEntity().body("No se pudo actualizar la canción");
-			
+		Cancion cancionActualizada = artistasServices.editarCancion(idAritsta, cancion);
+		
+		if (cancionActualizada == null) {
+			return ResponseEntity.ok("No se encontró la canción");
+		} else {
+			return ResponseEntity.ok(cancionActualizada);
 		}
 		
-		 return ResponseEntity.ok(artistasServices.editarCancion(idAritsta, cancion));
 	}
 	
 	
 
 	@PostMapping(value = "/save/{idArtista}")
-	public ResponseEntity<Object> publicarCancion(@RequestBody Cancion cancion,@PathVariable(name = "idArtista")Long id){
+	public ResponseEntity<String> publicarCancion(@RequestBody Cancion cancion,@PathVariable(name = "idArtista")Long id){
 		
 		if(artistasServices.publicarCancion(cancion,id)) {
 			return ResponseEntity.ok("Se ha publicado la canción correctamente");
@@ -73,18 +80,23 @@ public class ArtistasController {
 			
 		}
 		
-		 return ResponseEntity.unprocessableEntity().body("No pudo publicar la canción");
+		 return ResponseEntity.ok("No pudo publicar la canción");
 	}
 	
 	
 	@GetMapping(value = "/search/{idCancion}")
-	public ResponseEntity<Object> buscarCancion(@PathVariable(name = "idCancion") Long idCancion){
+	public ResponseEntity<?> buscarCancion(@PathVariable(name = "idCancion") Long idCancion){
 		
 		if(cancionServices.getCancion(idCancion)==null) {
-			return ResponseEntity.unprocessableEntity().body("No se encontró la cancion");
+			return new ResponseEntity<String>("No se encontró la cancion",HttpStatus.OK);
 		}
-		 return ResponseEntity.ok(cancionServices.getCancion(idCancion));
+		
+		else {
+			return ResponseEntity.ok(cancionServices.getCancion(idCancion));
+		}
+		
 	}
+		 
 	
 
 	@GetMapping(value = "/artistas")
@@ -99,7 +111,7 @@ public class ArtistasController {
 	@Autowired
 	private ArtistasServices artistasServices;
 	
-	@Autowired
+	@Autowired 
 	private CancionServices cancionServices;
 	
 }

@@ -1,7 +1,9 @@
 package com.appmusica.artistas;
 
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 
 @SpringBootApplication
 public class ServicioArtistasApplication {
@@ -10,4 +12,5 @@ public class ServicioArtistasApplication {
 		SpringApplication.run(ServicioArtistasApplication.class, args);
 	}
 
+	
 }

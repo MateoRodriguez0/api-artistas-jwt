@@ -39,7 +39,7 @@ public class Artista {
 	
 	
 	@JsonIgnore
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
 	@JoinTable(name = "canciones_artistas",
 		joinColumns = @JoinColumn(name="idArtista"),
 		inverseJoinColumns = {@JoinColumn(name="idCancion")})

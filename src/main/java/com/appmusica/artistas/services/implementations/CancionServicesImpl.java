@@ -1,6 +1,8 @@
 package com.appmusica.artistas.services.implementations;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -18,11 +20,14 @@ public class CancionServicesImpl implements CancionServices{
 	@Override
 	public List<Cancion> getCancionesByArtista(Long idArtista) {
 
-		Artista artista=artistaRepository
-				.findById(idArtista)
-				.orElse(null);		
+		Optional<Artista> artista=artistaRepository
+				.findById(idArtista);		
 		
-		return artista.getCanciones();
+		if(artista.isPresent()) {
+			return cancionRepository.findByArtistas(artista.get()).get();
+		}
+		 
+		return null;
 	}
 
 	@Override
