@@ -394,3 +394,8 @@ Y seria de la siguiente manera
     }
 ```
 
+## Tambien puedes mirar
+
+ - [Api Restful of listeners & Spring Data JPA for MusicApp](https://github.com/MateoRodriguez0/api-oyentes-jwt)
+ - [Music application with microservices](https://github.com/MateoRodriguez0/spring-security-jwt)
+
